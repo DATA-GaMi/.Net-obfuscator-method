@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- detection SDK version -->
+    <ParsedSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($(NETCoreSdkVersion), '-.*', ''))</ParsedSdkVersion>
+    <IsNet60Supported Condition="'$(ParsedSdkVersion)' >= '6.0'">true</IsNet60Supported>
+    <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
+    <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
+    <TargetFrameworks Condition="'$(IsNet60Supported)' == 'true'">$(TargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true'">$(TargetFrameworks);net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true'">$(TargetFrameworks);net9.0</TargetFrameworks>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>obfuscar.console</ToolCommandName>
+    <PackageOutputPath>..</PackageOutputPath>
+
+    <PackageId>Obfuscar.GlobalTool</PackageId>
+    <Authors>Ryan Williams, and other contributors.</Authors>
+    <Company>LeXtudio</Company>
+    <Product>Obfuscar Global Tools build</Product>
+    <Description>Obfuscar is a basic obfuscator for .NET assemblies. It uses massive overloading to rename metadata in .NET assemblies (including the names of methods, properties, events, fields, types and namespaces) to a minimal set, distinguishable in most cases only by signature.</Description>
+    <PackageReleaseNotes>https://github.com/obfuscar/obfuscar/releases</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/obfuscar/obfuscar</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/obfuscar/obfuscar</PackageProjectUrl>
+    <PackageIcon>Potion-icon.png</PackageIcon>
+    <PackageLicense>MIT</PackageLicense>
+    <Copyright>Copyright (c) 2007 Ryan Williams. Copyright (c) 2009-2024 Calvin Rien, Lex Li, RemObjects and other contributors.</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>obfuscar,obfuscation</PackageTags>
+    <GitVersionTargetFramework>net6.0</GitVersionTargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Potion-icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Obfuscar\Obfuscar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Options" Version="6.12.0.148" />
+    <PackageReference Include="GitVersion.MsBuild" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
